@@ -29,24 +29,32 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	claim := auth.NewClaim(user.Email)
-	token, err := claim.GenerateToken()
+	err = auth.SetSession(c, user.Email)
 	if err != nil {
-		c.JSON(500, gin.H{"Error": err.Error()})
+		c.JSON(500, gin.H{"Error": "unable to set session"})
 		return
 	}
-	refreshCustomClaim := auth.NewClaim(user.Email)
-	refreshToken, err := refreshCustomClaim.GenerateRefreshToken()
-	if err != nil {
-		c.JSON(500, gin.H{"Error": err.Error()})
-		return
-	}
-
-	c.JSON(200, &struct {
-		Token        string `json:"token"`
-		RefreshToken string `json:"refreshToken"`
-	}{
-		Token:        token,
-		RefreshToken: refreshToken,
-	})
+	c.JSON(200, gin.H{"Message": "login success"})
 }
+
+// 	claim := auth.NewClaim(user.Email)
+// 	token, err := claim.GenerateToken()
+// 	if err != nil {
+// 		c.JSON(500, gin.H{"Error": err.Error()})
+// 		return
+// 	}
+// 	refreshCustomClaim := auth.NewClaim(user.Email)
+// 	refreshToken, err := refreshCustomClaim.GenerateRefreshToken()
+// 	if err != nil {
+// 		c.JSON(500, gin.H{"Error": err.Error()})
+// 		return
+// 	}
+
+// 	c.JSON(200, &struct {
+// 		Token        string `json:"token"`
+// 		RefreshToken string `json:"refreshToken"`
+// 	}{
+// 		Token:        token,
+// 		RefreshToken: refreshToken,
+// 	})
+// }

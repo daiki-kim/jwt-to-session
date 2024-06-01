@@ -2,6 +2,7 @@ package auth
 
 import (
 	"errors"
+	"log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
@@ -18,12 +19,20 @@ const (
 
 func SetSession(c *gin.Context, email string) error {
 	session, _ := Store.Get(c.Request, SessionName)
+	session.Options = &sessions.Options{
+		Path:     "/",
+		MaxAge:   60,
+		Secure:   false,
+		HttpOnly: true,
+	}
+	log.Printf("SetSession: %v", session.Values)
 	session.Values[SessionKey] = email
 	return session.Save(c.Request, c.Writer)
 }
 
 func GetSession(c *gin.Context) (string, error) {
 	session, _ := Store.Get(c.Request, SessionName)
+	log.Printf("GetSession: %v", session.Values)
 	user, ok := session.Values[SessionKey].(string)
 	if !ok {
 		return "", errors.New("session not found")
@@ -33,6 +42,10 @@ func GetSession(c *gin.Context) (string, error) {
 
 func ClearSession(c *gin.Context) error {
 	session, _ := Store.Get(c.Request, SessionName)
+	log.Printf("ClearSession before: %v", session.Values)
+	session.Options.MaxAge = -1
 	delete(session.Values, SessionKey)
-	return session.Save(c.Request, c.Writer)
+	err := session.Save(c.Request, c.Writer)
+	log.Printf("ClearSession after: %v", session.Values)
+	return err
 }

@@ -19,12 +19,12 @@ jobs:
         run: |
           goreadme
 
-      - name: Commit and push README.md
+ - name: Commit and push README.md
         uses: ad-m/github-push-action@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.event.ref.name }}
           directory: .
           single_commit: true
-          message: "Generate README.md"
+          message: "Generate README.md"     
 

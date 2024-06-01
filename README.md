@@ -2,6 +2,8 @@
 
 12-6: ProfileまでのJWTのコードをsessionに切り替える形で作成。
 
+- `github.com/gorilla/sessions`を採用。
+
 - `auth/session.go`を追加。
 
 - `middlewares/session_auth.go`を追加。
@@ -14,9 +16,15 @@
 
 - sessionの確認は`cookies.txt`にcookieを作成するcurlコマンドを使用。
 
-## API Endpoint
+## API Endpoints
 
-サーバーを起動:
+インストール:
+
+```bash
+go mod tidy
+```
+
+サーバー起動:
 
 ```bash
 go run main.go
@@ -49,7 +57,7 @@ curl --location --request POST -c cookies.txt '0.0.0.0:8080/api/v1/login' \
 ### Profile
 
 ```bash
- curl --location --request GET -b cookies.txt '0.0.0.0:8080/api/v1/profile'
+curl --location --request GET -b cookies.txt '0.0.0.0:8080/api/v1/profile'
  ```
 
 ### Logout

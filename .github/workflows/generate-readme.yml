@@ -1,0 +1,30 @@
+name: Generate README.md
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  generate-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install goreadme
+        run: |
+          go get -u github.com/posener/goreadme
+
+      - name: Generate README.md
+        run: |
+          goreadme
+
+      - name: Commit and push README.md
+        uses: ad-m/github-push-action@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.event.ref.name }}
+          directory: .
+          single_commit: true
+          message: "Generate README.md"
+

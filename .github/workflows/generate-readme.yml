@@ -19,12 +19,10 @@ jobs:
           goreadme
 
       - name: Commit and push README.md
-             uses: actions/checkout@v3
-             with:
-               github_token: ${{ secrets.GITHUB_TOKEN }}
-               branch: ${{ github.event.ref.name }}
-               path: .
-               fetch-depth: 0
-               force: true
-               message: "Generate README.md"     
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Generate README.md"
+          branch: ${{ github.event.ref_name }}
+          commit_user_name: GitHub Actions
+          commit_user_email: actions@github.com
 

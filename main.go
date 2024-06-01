@@ -16,6 +16,7 @@ func main() {
 			v1.POST("/login", controllers.Login)
 			v1.POST("/signup", controllers.Signup)
 			v1.GET("/profile", middlewares.SessionAuth(), controllers.Profile)
+			v1.POST("/logout", middlewares.SessionAuth(), controllers.Logout)
 			// v1.GET("/profile", middlewares.JwtTokenVerifier(), controllers.Profile)
 			// v1.GET("/profile", controllers.Profile)
 		}

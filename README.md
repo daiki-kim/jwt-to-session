@@ -37,7 +37,7 @@ curl --location --request POST '0.0.0.0:8080/api/v1/signup' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name": "jun",
-    "email": "test@alamoa.io",
+    "email": "test@alamoa.com",
     "password": "password"
 }'
 ```
@@ -49,7 +49,7 @@ curl --location --request POST -c cookies.txt '0.0.0.0:8080/api/v1/login' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name": "jun",
-    "email": "test@alamoa.io",
+    "email": "test@alamoa.com",
     "password": "password"
 }'
 ```

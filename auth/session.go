@@ -21,8 +21,8 @@ func SetStore(store sessions.Store) {
 	Store = store
 }
 
-func SetSession(c *gin.Context, email string) error {
-	session := sessions.Default(c)
+func SetSession(ctx *gin.Context, email string) error {
+	session := sessions.Default(ctx)
 	session.Options(sessions.Options{
 		Path:     "/",
 		MaxAge:   60 * 60,
@@ -34,8 +34,8 @@ func SetSession(c *gin.Context, email string) error {
 	return session.Save()
 }
 
-func GetSession(c *gin.Context) (string, error) {
-	session := sessions.Default(c)
+func GetSession(ctx *gin.Context) (string, error) {
+	session := sessions.Default(ctx)
 	email, ok := session.Get(SessionKey).(string)
 	if !ok {
 		return "", errors.New("session not found")
@@ -44,8 +44,8 @@ func GetSession(c *gin.Context) (string, error) {
 	return email, nil
 }
 
-func ClearSession(c *gin.Context) error {
-	session := sessions.Default(c)
+func ClearSession(ctx *gin.Context) error {
+	session := sessions.Default(ctx)
 	session.Options(sessions.Options{
 		Path:   "/",
 		MaxAge: -1,

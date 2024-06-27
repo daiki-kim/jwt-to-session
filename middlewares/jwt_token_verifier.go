@@ -9,25 +9,25 @@ import (
 )
 
 func JwtTokenVerifier() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		authorizationHeader := c.Request.Header.Get("Authorization")
+	return func(ctx *gin.Context) {
+		authorizationHeader := ctx.Request.Header.Get("Authorization")
 
 		bearerToken := strings.Split(authorizationHeader, "Bearer ")
 		if len(bearerToken) != 2 {
-			c.JSON(400, "invalid bearer token")
-			c.Abort()
+			ctx.JSON(400, "invalid bearer token")
+			ctx.Abort()
 			return
 		}
 		token := strings.TrimSpace(bearerToken[1])
 
 		claims, err := auth.ValidateToken(token, auth.TokenVerifyKey)
 		if err != nil {
-			c.JSON(400, err.Error())
-			c.Abort()
+			ctx.JSON(400, err.Error())
+			ctx.Abort()
 			return
 		}
 
-		c.Set("email", claims.Email)
-		c.Next()
+		ctx.Set("email", claims.Email)
+		ctx.Next()
 	}
 }

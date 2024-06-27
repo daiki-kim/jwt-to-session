@@ -6,12 +6,12 @@ import (
 	"awesomeProject/models"
 )
 
-func Profile(c *gin.Context) {
-	email, _ := c.Get("email")
+func Profile(ctx *gin.Context) {
+	email, _ := ctx.Get("email")
 	user, err := models.GetUserByEmail(email.(string))
 	if err != nil {
-		c.JSON(400, gin.H{"Error": err.Error()})
+		ctx.JSON(400, gin.H{"Error": err.Error()})
 		return
 	}
-	c.JSON(200, user)
+	ctx.JSON(200, user)
 }

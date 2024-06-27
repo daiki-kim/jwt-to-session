@@ -7,22 +7,22 @@ import (
 )
 
 func SessionAuth() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		session, err := auth.GetSession(c)
+	return func(ctx *gin.Context) {
+		session, err := auth.GetSession(ctx)
 		if err != nil {
-			c.JSON(401, gin.H{"Error": "unauthorized"})
-			c.Abort()
+			ctx.JSON(401, gin.H{"Error": "unauthorized"})
+			ctx.Abort()
 			return
 		}
 
 		if session == "" {
-			c.JSON(401, gin.H{"Error": "unauthorized"})
-			c.Abort()
+			ctx.JSON(401, gin.H{"Error": "unauthorized"})
+			ctx.Abort()
 			return
 		}
 
-		c.Set("email", session)
+		ctx.Set("email", session)
 
-		c.Next()
+		ctx.Next()
 	}
 }

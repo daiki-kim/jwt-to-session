@@ -6,11 +6,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Logout(c *gin.Context) {
-	err := auth.ClearSession(c)
+func Logout(ctx *gin.Context) {
+	err := auth.ClearSession(ctx)
 	if err != nil {
-		c.JSON(500, gin.H{"Error": err.Error()})
+		ctx.JSON(500, gin.H{"Error": err.Error()})
 		return
 	}
-	c.JSON(200, gin.H{"Message": "logout success"})
+	ctx.JSON(200, gin.H{"Message": "logout success"})
 }

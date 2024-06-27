@@ -1,14 +1,20 @@
 package main
 
 import (
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 
+	"awesomeProject/auth"
 	"awesomeProject/controllers"
 	"awesomeProject/middlewares"
 )
 
 func main() {
 	r := gin.Default()
+	store := cookie.NewStore([]byte("secret"))
+	r.Use(sessions.Sessions(auth.SessionName, store))
+
 	api := r.Group("/api")
 	{
 		v1 := api.Group("/v1/")

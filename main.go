@@ -14,6 +14,7 @@ func main() {
 	r := gin.Default()
 	store := cookie.NewStore([]byte("secret"))
 	r.Use(sessions.Sessions(auth.SessionName, store))
+	auth.SetStore(store)
 
 	api := r.Group("/api")
 	{
